@@ -1,0 +1,14 @@
+isRenewal: false # If true existing public and private key located in `workingDir` will be used
+email: letsencrypt@email.com # Let's Encrypt account email
+domain: somedomain.com # No www. - this will be added automatically
+#  Debian: /etc/ssl/openssl.cnf
+#  RHEL and CentOS: /etc/pki/tls/openssl.cnf
+#  Mac OSX: /System/Library/OpenSSL/openssl.cnf
+openSSLConfigPath: /System/Library/OpenSSL/openssl.cnf
+workingDir: /full/path/to/dir/
+includePrivateKeyInOutput: true # If true will add contents of domain.key to Signed Certificate Chain
+sftpHost: ssh.host.example.net
+sftpUsername: ssh_user
+# sftpPassword: password123 # Comment out and will be prompted at runtime
+stpPathToRoot: /home/public/ # Path to www root
+# sftpPort: 22 # Optional: default is 22
