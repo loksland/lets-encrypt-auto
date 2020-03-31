@@ -21,6 +21,7 @@ function LetsEncryptAuto(jobDirPath){
 		// delete previous keys
 		del.sync(config.workingDir + '/*');
 	}
+	config.registerWWW = typeof config.registerWWW !== 'undefined' ? config.registerWWW : true; // Default true
 
 	step1(config);
 
@@ -105,7 +106,10 @@ function step2(config){
 	// bash -c '%cmd%'
 	// ```
 	// as it contains process substitution Eg. <(process sub)
-	cmds.push(`bash -c \'openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat `+config.openSSLConfigPath+` <(printf "\\n[SAN]\\nsubjectAltName=DNS:`+config.domain+`,DNS:www.`+config.domain+`"))\'`);
+
+	var wwwDomain = config.registerWWW ? `,DNS:www.`+config.domain : ``; // Default true
+
+	cmds.push(`bash -c \'openssl req -new -sha256 -key domain.key -subj "/" -reqexts SAN -config <(cat `+config.openSSLConfigPath+` <(printf "\\n[SAN]\\nsubjectAltName=DNS:`+config.domain+wwwDomain+`"))\'`);
 
 	cmd.get(
 		cmds.join('\n')
@@ -257,8 +261,10 @@ function step3B(config, partIndex, data){
 // Verify ownership
 function step4A(config, domainIndex){
 
+	var totalDomains = config.registerWWW ? 2 : 1
+
 	domainIndex++;
-	if (domainIndex == 2){
+	if (domainIndex == totalDomains){
 		step5A(config);
 		return;
 	}

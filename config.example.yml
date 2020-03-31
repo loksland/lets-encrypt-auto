@@ -1,6 +1,7 @@
 isRenewal: false # If true existing public and private key located in `workingDir` will be used
 email: letsencrypt@email.com # Let's Encrypt account email
-domain: somedomain.com # No www. - this will be added automatically
+domain: somedomain.com # No www. - see below
+registerWWW: false # www will be added and registered automatically, default true
 #  Debian: /etc/ssl/openssl.cnf
 #  RHEL and CentOS: /etc/pki/tls/openssl.cnf
 #  Mac OSX: /System/Library/OpenSSL/openssl.cnf
